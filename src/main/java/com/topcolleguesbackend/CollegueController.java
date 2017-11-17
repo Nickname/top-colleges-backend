@@ -1,6 +1,7 @@
 package com.topcolleguesbackend;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import com.topcolleguesbackend.entite.Collegue;
 import com.topcolleguesbackend.repository.CollegueRepository;
 
-@RestController("/collegues")
+@CrossOrigin(origins = "*")
+@RestController()
+@RequestMapping(path = "/collegues")
 public class CollegueController {
 
 	@Autowired CollegueRepository repoCollegue;
@@ -21,7 +24,7 @@ public class CollegueController {
 		return repoCollegue.findAll();
 	}
 	
-	/*@GetMapping("/{id}")
+	@GetMapping("/{id}")
 	public Collegue getById(@PathVariable Integer id) {
 		Optional<Collegue> collegue = repoCollegue.findById(id);
 		
@@ -30,7 +33,7 @@ public class CollegueController {
 		} else {
 			return null;
 		}
-	}*/
+	}
 	
 	@PostMapping
 	public Collegue save(@RequestBody Collegue collegue) {
@@ -40,14 +43,21 @@ public class CollegueController {
 	
 	@Transactional
 	@PutMapping("/{id}")
-	public Collegue update(@RequestBody Collegue collegue, @PathVariable Integer id) {
-		Optional<Collegue> leCollegue = repoCollegue.findByNom(collegue.getNom());
+	public Collegue noter(@RequestBody Map<String, Boolean> params, @PathVariable Integer id) {
+		Boolean avis = params.get("avis");
+		
+		Optional<Collegue> leCollegue = repoCollegue.findById(id);
 		
 		if (leCollegue.isPresent()) {
-			collegue.setId(leCollegue.get().getId());
-			repoCollegue.save(collegue);
-			
-			return collegue;
+			if (avis) {
+				Integer jaime = leCollegue.get().getScore() + new Integer(10);
+				leCollegue.get().setScore(jaime);
+			} else {
+				Integer jedeteste = leCollegue.get().getScore() - new Integer(5);
+				leCollegue.get().setScore(jedeteste);
+			}
+			repoCollegue.save(leCollegue.get());
+			return leCollegue.get();
 		} else {
 			return null;
 		}
