@@ -19,9 +19,9 @@
 			</activation>
 			<properties>
 				<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
-				<jdbc.url>jdbc:mysql://localhost:3306/top-collegue</jdbc.url>
-				<jdbc.user>top-collegue</jdbc.user>
-				<jdbc.pass>top-collegue</jdbc.pass>
+				<jdbc.url>jdbc:mysql://localhost:3306/top-collegues</jdbc.url>
+				<jdbc.user>root</jdbc.user>
+				<jdbc.pass></jdbc.pass>
 				<jpa.hibernate.ddl>create-drop</jpa.hibernate.ddl>
 				<jdbc.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</jdbc.dialect>
 				<jdbc.connections.max.active>5</jdbc.connections.max.active>
