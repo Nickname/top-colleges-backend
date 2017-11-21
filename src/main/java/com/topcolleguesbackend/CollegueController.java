@@ -62,4 +62,15 @@ public class CollegueController {
 			return null;
 		}
 	}
+	
+	@DeleteMapping("/{id}")
+	public Collegue delete(@PathVariable Integer id) {
+		Optional<Collegue> leCollegue = repoCollegue.findById(id);
+		if (leCollegue.isPresent()) {
+			repoCollegue.delete(leCollegue.get());
+			return leCollegue.get();
+		} else {
+			return null;
+		}
+	}
 }
